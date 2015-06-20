@@ -1,0 +1,3 @@
+vhdl work "control_unit.vhd"
+vhdl work "alu_control.vhd"
+vhdl work "hig_level_tb.vhd"

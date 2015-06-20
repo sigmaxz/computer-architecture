@@ -1,0 +1,38 @@
+Running: /opt/Xilinx/14.6/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/csmajs/svill017/cs161/lab4/cs161_processor/Processor_test_isim_beh.exe -prj /home/csmajs/svill017/cs161/lab4/cs161_processor/Processor_test_beh.prj work.Processor_test 
+ISim P.68d (signature 0xfbc00daa)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/csmajs/svill017/cs161/lab4/cs161_processor/cpu_component_library.vhd" into library work
+Parsing VHDL file "/home/csmajs/svill017/cs161/lab4/cs161_processor/cpu_components.vhd" into library work
+Parsing VHDL file "/home/csmajs/svill017/cs161/lab4/cs161_processor/control_unit.vhd" into library work
+Parsing VHDL file "/home/csmajs/svill017/cs161/lab4/cs161_processor/cs161_processor.vhd" into library work
+Parsing VHDL file "/home/csmajs/svill017/cs161/lab4/cs161_processor/Processor_test.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 97708 KB
+Fuse CPU Usage: 2430 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling package cpu_component_library
+Compiling package textio
+Compiling architecture behavioral of entity generic_register [\generic_register(32)\]
+Compiling architecture behavioral of entity memory [\memory("init.coe")(1,8)\]
+Compiling architecture behavioral of entity mux_2_1 [\mux_2_1(5)\]
+Compiling architecture behavioral of entity control_unit [control_unit_default]
+Compiling architecture behavioral of entity cpu_registers [cpu_registers_default]
+Compiling architecture behavioral of entity alu_control [alu_control_default]
+Compiling architecture behavioral of entity mux_2_1 [\mux_2_1(32)\]
+Compiling architecture behavioral of entity alu [alu_default]
+Compiling architecture behavioral of entity cs161_processor [cs161_processor_default]
+Compiling architecture behavior of entity processor_test
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 26 VHDL Units
+Built simulation executable /home/csmajs/svill017/cs161/lab4/cs161_processor/Processor_test_isim_beh.exe
+Fuse Memory Usage: 1200084 KB
+Fuse CPU Usage: 2930 ms
+GCC CPU Usage: 7450 ms

@@ -1,0 +1,5 @@
+vhdl work "cpu_component_library.vhd"
+vhdl work "cpu_components.vhd"
+vhdl work "control_unit.vhd"
+vhdl work "cs161_processor.vhd"
+vhdl work "Processor_test.vhd"

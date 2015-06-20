@@ -1,0 +1,37 @@
+Project for najjar in Databases with fpga
+
+
+arguments:
+   size of p_cam s_cam and main_cam
+   ./sim -p ## -s ## -m ## 
+
+defaults:
+p_cam/s_cam = 256
+main_cam = 1000000
+
+architecture:
+
+class cache:
+  private
+	name of the memory 
+	map : entry -> vector pos
+	vector< pairs> : contains the counts of the entry and dirty bit
+	oldest : cursor to oldest dirty entry
+	max_size : limit of the memory space
+
+  methods:
+	Cache(string, int) // constructor
+	void p_insert(int entry) // insert item into cam memory
+		//this handles pcam full by evicting oldest clean
+	void s_insert(int entry) // inster item into cam memory
+		//this handles scam full by writing to main mem
+	void remove(int entry) // remove item from cam memory
+	bool contains(int entry) // true if in map otherwise false
+        void increment(int entry) // finds and increments entry counter 		 in cam
+	
+  	// other auxilary functions
+	string get_name() //return the name of object
+	size_t size() // return the current vector size
+	
+
+

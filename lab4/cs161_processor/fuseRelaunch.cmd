@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/csmajs/svill017/cs161/lab4/cs161_processor/Processor_test_isim_beh.exe" -prj "/home/csmajs/svill017/cs161/lab4/cs161_processor/Processor_test_beh.prj" "work.Processor_test" 

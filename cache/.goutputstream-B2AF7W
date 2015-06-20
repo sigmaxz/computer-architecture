@@ -1,0 +1,202 @@
+#include <iostream>
+#include <vector>
+
+#define  BLOCK_SIZE     16
+const int CACHE_SIZE[]   =  { 1024, 2048, 4096, 8192, 16384 };
+
+using namespace std;
+
+int main () {
+   // build cache
+   int number_of_blocks[5];
+   for(int i = 0; i < 5 ; i++)
+   {
+			number_of_blocks[i]  = CACHE_SIZE[i] / BLOCK_SIZE;
+//			      std::cout << number_of_blocks[i] << std::endl;
+		}
+   std::vector<unsigned long long> cache[5];
+   //direct
+   for (int i = 0; i < 5; ++i)
+		{
+			for(int j = 0; j < CACHE_SIZE[i] ; j++)
+			{
+				cache[i].push_back(0);
+			}
+		}
+		//2way
+	 vector< unsigned long long>  cache2[5];
+
+	
+   for (int i = 0; i < 5; ++i)
+		{
+			for(int j = 0; j < CACHE_SIZE[i] ; j++)
+			{
+				cache2[i].push_back(0);
+			}
+		}
+
+   // read memory accesses from standard input
+   unsigned long long read_line;
+   int total = 0, miss[10] = {0}; // miss 5-9 are 2 way ,
+   while (std::cin >> std::hex >> read_line) {
+      total++;
+      /////////////////////////////////direct
+      //1024
+      unsigned long long tag0   = read_line >> (6 + 4); // get tag
+      unsigned long long index0 = read_line >> 4;
+      index0 = index0 & 0x000000000000003F;
+      // check for miss
+      if (cache[0][index0] != tag0)
+      {
+				cache[0][index0] = tag0;
+				miss[0]++;
+			}
+			 //2048
+      unsigned long long tag1   = read_line >> (7 + 4); // get tag
+      unsigned long long index1 = read_line >> 4;
+      index1 = index1 & 0x000000000000007F;
+      // check for miss
+      if (cache[1][index1] != tag1)
+      {
+				cache[1][index1] = tag1;
+				miss[1]++;
+			}
+			 //4xxx
+      unsigned long long tag2   = read_line >> (8 + 4); // get tag
+      unsigned long long index2 = read_line >> 4;
+      index2 = index2 & 0x00000000000000FF;
+      // check for miss
+      if (cache[2][index2] != tag2)
+      {
+				cache[2][index2] = tag2;
+				miss[2]++;
+			}
+			 //8xxx
+      unsigned long long tag3   = read_line >> (9 + 4); // get tag
+      unsigned long long index3 = read_line >> 4;
+      index3 = index3 & 0x00000000000001FF;
+      // check for miss
+      if (cache[3][index3] != tag3)
+      {
+				cache[3][index3] = tag3;
+				miss[3]++;
+			}
+      //16xxx
+      unsigned long long tag4  = read_line >> (10 + 4); // get tag
+      unsigned long long index4 = read_line >> 4;        // get index
+      index4 = index4 & 0x00000000000003FF;
+
+      // check for miss
+      if (cache[4][index4] != tag4) {
+         cache[4][index4] = tag4;
+         miss[4]++;
+      }
+      ////////////////////////////////////////2way
+      //1024
+      unsigned long long tag20   = read_line >> (5 + 4); // get tag
+      unsigned long long index20 = read_line >> 4;
+      index20 = index20 & 0x000000000000001F;
+      // check for miss
+      if(cache2[0][index20 * 2] == tag20 )
+      {
+				cache2[0][index20 *2 ] = cache2[0][(index20 *2) +1];
+				cache2[0][(index20 * 2) +1] = tag20;
+			}
+			else if( cache2[0][(index20 * 2) +1] == tag20)
+			{
+			}
+      else
+      {
+				if(cache2[0][index20 * 2] == 0)
+				{
+					cache2[0][index20 * 2] = tag20;
+				}
+				else if(cache2[0][(index20 * 2 )+ 1] == 0)
+				{
+					cache2[0][(index20 * 2 )+1] = tag20;
+				}
+				else cache2[0][index20 * 2] = tag20;
+				
+				miss[5]++;
+			}
+			 //2048
+      unsigned long long tag21   = read_line >> (6 + 5); // get tag
+      unsigned long long index21 = read_line >> 5;
+      index21 = index21 & 0x000000000000003F;
+      // check for miss
+      if(cache2[1][index21 * 2] == tag21 )
+      {
+				cache2[1][index21 *2 ] = cache2[1][index21 *2 +1];
+				cache2[1][index21 * 2 +1] = tag21;
+			}
+			else if( cache2[1][index21 * 2 +1] == tag21)
+			{
+			}
+      else
+      {
+				if(cache2[1][index21 * 2] == 0)
+				{
+					cache2[1][index21 * 2] = tag21;
+				}
+				else if(cache2[1][index21 * 2 + 1] == 0)
+				{
+					cache2[1][index21 * 2 +1] = tag21;
+				}
+				else cache2[1][index21 * 2] = tag21;
+				
+				miss[6]++;
+			}
+			/*
+			 //4xxx
+      unsigned long long tag22   = read_line >> (8 + 4); // get tag
+      unsigned long long index22 = read_line >> 4;
+      index22 = index22 & 0x00000000000000FF;
+      // check for miss
+      if (cache2[2][index22] != tag22)
+      {
+				cache2[2][index22] = tag22;
+				miss[7]++;
+			}
+			 //8xxx
+      unsigned long long tag23   = read_line >> (9 + 4); // get tag
+      unsigned long long index23 = read_line >> 4;
+      index23 = index23 & 0x00000000000001FF;
+      // check for miss
+      if (cache2[3][index23] != tag23)
+      {
+				cache2[3][index23] = tag23;
+				miss[8]++;
+			}
+      //16xxx
+      unsigned long long tag24  = read_line >> (10 + 4); // get tag
+      unsigned long long index24 = read_line >> 4;        // get index
+      index24 = index24 & 0x00000000000003FF;
+
+      // check for miss
+      if (cache2[4][index24] != tag24) {
+         cache2[4][index24] = tag24;
+         miss[9]++;
+      }
+      */
+      
+   }
+   double miss_rate0 = (double)miss[0] / (double)(total);
+   double miss_rate1 = (double)miss[1] / (double)(total);
+   double miss_rate2 = (double)miss[2] / (double)(total);
+   double miss_rate3 = (double)miss[3] / (double)(total);
+   double miss_rate = (double)miss[4] / (double)(total);
+   double miss_rate5 = (double)miss[5] / (double)(total);
+   double miss_rate6 = (double)miss[6] / (double)(total);
+
+   std::printf("total accesses: %d\n", total);
+   printf("miss rate:      %0.2lf\n", miss_rate0 * 100.0);
+   printf("miss rate:      %0.2lf\n", miss_rate1 * 100.0);
+   printf("miss rate:      %0.2lf\n", miss_rate2 * 100.0);
+   printf("miss rate:      %0.2lf\n", miss_rate3 * 100.0);
+   printf("miss rate:      %0.2lf\n", miss_rate * 100.0);
+   printf("miss rate:      %0.2lf\n", miss_rate5 * 100.0);
+   printf("miss rate:      %0.2lf\n", miss_rate6 * 100.0);
+
+   return 0;
+}
+
